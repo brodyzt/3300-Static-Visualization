@@ -1,3 +1,41 @@
 <html>
-    
+
+<head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="node_modules/datamaps/dist/datamaps.world.min.js"></script>
+    <script src="usa.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="container" style="position: relative; width: 500px; height: 300px; margin: auto; text-align:center">
+        <h1 id="mapTitle">US Map</h1>
+    </div>
+
+    <script>
+        var map = new Datamap({
+            element: document.getElementById('container'),
+            scope: "usa",
+            geographyConfig: {
+                highlightOnHover: false,
+                popupOnHover: false
+            },
+            fills: {
+                Republican: "#ff0000",
+                defaultFill: "#ff00ff"
+            },
+            data: {
+                "AZ": {
+                    fillKey: "Republican",
+                    electoralVotes: 15
+                }
+            }
+        });
+
+        map.labels();
+    </script>
+</body>
+
 </html>
