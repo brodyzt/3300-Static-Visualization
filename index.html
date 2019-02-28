@@ -20,13 +20,24 @@
         d3.csv("populations.csv", populations => {
             d3.json("mapping.json", mapping => {
 
-                _.invert(mapping);
+                let inverted = {};
 
-                // let stateData = populations.map(element => {
-                //     mapping[element["state"]] : {
-                //         population: element["pop_est_2014"]
-                //     }
-                // });
+                for (map in mapping) {
+                    // console.log(map)
+                    inverted[mapping[map]] = map;
+                }
+
+                console.log(inverted)
+
+                let stateData = {};
+
+                populations.forEach(element => {
+                    var key = inverted[element["state"]]
+                    stateData[key] = {
+                        population: element["pop_est_2014"],
+                        fillKey: "#Republican"
+                    }
+                });
 
                 // let stateData = {
                 //     "AZ": {
@@ -35,7 +46,7 @@
                 //     }
                 // }
 
-                console.log(data)
+                console.log(stateData)
 
                 map = new Datamap({
                     element: document.getElementById('container'),
