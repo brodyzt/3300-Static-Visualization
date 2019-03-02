@@ -23,16 +23,16 @@ d3.json("testfailures.json", (error, movieData) => {
     ]
 
     let stackBarTestKeyToFullNameDict = {
-        'ok': "Passes Bechdel Test",
-        'ok-disagree': "Passes Bechdel Test (Some Disagreement)",
+        'ok': "Passes Bechdel",
+        'ok-disagree': "Passes Bechdel (Disagreement)",
         'dubious': "Doubtful",
-        'dubious-disagree': "Doubtful ",
+        'dubious-disagree': "Doubtful (Disagreement)",
         'men': "Only Talk About Men",
-        'men-disagree': "Only Talk About Men (Some Disagreement)",
+        'men-disagree': "Only Talk About Men (Disagreement)",
         'notalk': "Women Do Not Talk To Each Other",
         'notalk-disagree': "Women Do Not Talk To Each Other (Some Disagreement)",
         'nowomen': "No Women In Movie",
-        'nowomen-disagree': "No Women In Movie (Some Disagreement)",
+        'nowomen-disagree': "No Women (Disagreement)",
     }
 
     // Configure padding around graph
@@ -40,11 +40,12 @@ d3.json("testfailures.json", (error, movieData) => {
         top: 50,
         bottom: 50,
         left: 50,
-        right: 50
+        right: 50,
+        betweenLegend: 20
     }
 
 
-    let stackBarLegendWidth = 300;
+    let stackBarLegendWidth = 200;
 
     let stackBarContainerSvg = d3.select("svg#zack");
 
@@ -128,7 +129,7 @@ d3.json("testfailures.json", (error, movieData) => {
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
                     .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
-                    .style("opacity", 1 - (index % 2) * 0.5)
+                    .style("opacity", 0.75 - (index % 2) * 0.25)
 
                 // console.log(colors(index))
                 currentY -= height;
@@ -144,7 +145,7 @@ d3.json("testfailures.json", (error, movieData) => {
         .attr("class", "legend")
         .attr("width", stackBarLegendWidth)
         .attr("height", stackBarLegendHeight)
-        .attr("transform", "translate(" + (stackBarPadding.left + stackBarWidth - stackBarLegendWidth) + "," + (stackBarPadding.top) +
+        .attr("transform", "translate(" + (stackBarWidth + stackBarPadding.betweenLegend) + "," + (0) +
             ")");
 
     stackBarTestNames.forEach((testName, index) => {
@@ -161,7 +162,7 @@ d3.json("testfailures.json", (error, movieData) => {
             .attr("height", "20")
             .attr("id", testName)
             .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
-            .style("opacity", 1 - (index % 2) * 0.5)
+            .style("opacity", 0.75 - (index % 2) * 0.25)
 
         stackBarCurrentLegendItem.append("text")
             .text(stackBarTestKeyToFullNameDict[testName])
