@@ -7,7 +7,7 @@ d3.json("testfailures.json", (error, movieData) => {
 
     // console.log(movieData);
 
-    
+
     let stackBarTestNames = [
         // 'ok',                        // passes bechdel test
         // 'ok-disagree',               // passes bechdel test (not unanimous opinion)
@@ -23,16 +23,16 @@ d3.json("testfailures.json", (error, movieData) => {
     ]
 
     let stackBarTestKeyToFullNameDict = {
-        'ok': "Passes Bechdel Test",    
-        'ok-disagree': "Passes Bechdel Test (Some Disagreement)",    
-        'dubious': "Doubtful",   
+        'ok': "Passes Bechdel Test",
+        'ok-disagree': "Passes Bechdel Test (Some Disagreement)",
+        'dubious': "Doubtful",
         'dubious-disagree': "Doubtful ",
-        'men',
-        'men-disagree',
-        'notalk', 
-        'notalk-disagree',
-        'nowomen',  
-        'nowomen-disagree',
+        'men': "Only Talk About Men",
+        'men-disagree': "Only Talk About Men (Some Disagreement)",
+        'notalk': "Women Do Not Talk To Each Other",
+        'notalk-disagree': "Women Do Not Talk To Each Other (Some Disagreement)",
+        'nowomen': "No Women In Movie",
+        'nowomen-disagree': "No Women In Movie (Some Disagreement)",
     }
 
     // Configure padding around graph
@@ -44,7 +44,7 @@ d3.json("testfailures.json", (error, movieData) => {
     }
 
 
-    let stackBarLegendWidth = 50;
+    let stackBarLegendWidth = 300;
 
     let stackBarContainerSvg = d3.select("svg#zack");
 
@@ -112,7 +112,6 @@ d3.json("testfailures.json", (error, movieData) => {
     movieData
         // .filter(x => x[0] >= startYear)
         .forEach((yearData, yearIndex) => {
-            console.log(yearIndex)
             // console.log(movie)
             var currentY = stackBarHeight;
 
@@ -129,6 +128,7 @@ d3.json("testfailures.json", (error, movieData) => {
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
                     .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
+                    .style("opacity", 1 - (index % 2) * 0.5)
 
                 // console.log(colors(index))
                 currentY -= height;
@@ -160,10 +160,11 @@ d3.json("testfailures.json", (error, movieData) => {
             .attr("width", "20")
             .attr("height", "20")
             .attr("id", testName)
-            .style("fill", stackBarColorScale(index))
+            .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
+            .style("opacity", 1 - (index % 2) * 0.5)
 
         stackBarCurrentLegendItem.append("text")
-            .text(testName)
+            .text(stackBarTestKeyToFullNameDict[testName])
             .attr("dx", "25")
             .attr("dy", "15")
             .attr("font-size", "10")
