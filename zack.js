@@ -27,12 +27,18 @@ d3.json("testfailures.json", (error, movieData) => {
     console.log(stackBarWidth);
 
     // Create scales for axes
-    let stackBarMinYear = 1970;
-    let stackBarMaxYear = 2013;
+    // let stackBarMinYear = 1970;
+    // let stackBarMaxYear = 2013;
+    let startYear = 1990;
+    let endYear = 2013;
+    let years = [...Array(endYear - startYear + 1).keys()]
+        .map(x => x + startYear);
 
-    let stackBarXScale = d3.scale.linear()
-        .domain([stackBarMinYear, stackBarMaxYear])
-        .range([0, stackBarWidth]);
+    console.log(years)
+
+    let stackBarXScale = d3.scale.ordinal()
+        .domain(years)
+        .rangeRoundBands([0, stackBarWidth], 0.1);
 
     let stackBarYScale = d3.scale.linear()
         .domain([0, 1])
@@ -43,7 +49,7 @@ d3.json("testfailures.json", (error, movieData) => {
         .scale(stackBarXScale)
         .orient("bottom")
         .tickSize(-stackBarHeight)
-        .tickFormat(d3.format(""))
+        .tickFormat(yearVal => yearVal % 3 == 0 ? yearVal : "")
     let stackBarYAxis = d3.svg.axis()
         .scale(stackBarYScale)
         .orient("left")
@@ -52,19 +58,59 @@ d3.json("testfailures.json", (error, movieData) => {
         .tickFormat(d3.format("%"))
 
     // Append axis SVG components to DOM
-    stackBarSvg.append("g")
+    let stackBarXAxisSVGComponent = stackBarSvg.append("g")
         .attr("transform", "translate(0," + (stackBarHeight) + ")")
         .call(stackBarXAxis);
-    stackBarSvg.append("g")
+    let stackBarYAxisSVGComponent = stackBarSvg.append("g")
         .attr("transform", "translate(0,0)")
         .call(stackBarYAxis);
+
+    stackBarYAxisSVGComponent.selectAll(".tick:not(:first-of-type) line").attr("stroke", "#777").attr('stroke-width',
+        '.75px')
+    stackBarYAxisSVGComponent.selectAll(".tick text").attr("y", 0).attr("dx", 0);
 
     // Remove domain components garbage
     d3.selectAll("path.domain").remove();
 
     // Add Data to graph
-    movieData.forEach(movie => {
-        // console.log(movie)
-        
-    });
+    let tests = [
+        'ok',
+        'ok-disagree',
+        'dubious',
+        'dubious-disagree',
+        'men',
+        'men-disagree',
+        'notalk',
+        'notalk-disagree',
+        'nowomen',
+        'nowomen-disagree',
+
+    ]
+
+    let colors = d3.scale.category10();
+
+    movieData.filter(x => x[0] >= startYear)
+        .forEach(yearData => {
+            // console.log(movie)
+            var currentY = stackBarHeight;
+
+            tests.forEach((testName, index) => {
+                // console.log(yearData[1][testName])
+                // console.log("Year: " + yearData[0] + "; TestName: " + testName + "; " + yearData[1][testName]);
+                let barTopY = stackBarYScale(yearData[1][testName]);
+                let height = stackBarHeight - barTopY;
+                console.log("Testval: " + yearData[1][testName] + "; barTopY: " + String(barTopY) + "; height: " + height + "; currentY: " + currentY);
+                stackBarSvg.append("rect")
+                    .attr("width", stackBarXScale.rangeBand())
+                    // .attr("height", stackBarYScale(parseFloat(yearData[1][testName])))
+                    .attr("height", height)
+                    .attr("x", stackBarXScale(parseInt(yearData[0])))
+                    .attr("y", barTopY - stackBarHeight + currentY)
+                    .style("fill", colors(index >= 4 ? 0 : 1))
+
+                console.log(colors(index))
+                currentY -= height;
+            })
+
+        });
 })
