@@ -1,43 +1,11 @@
-d3.csv("movies.csv", (error, movieData) => {
+d3.json("testfailures.json", (error, movieData) => {
 
     // Output error to console if data can't be loaded
     if (error) {
         return console.warn(error);
     }
 
-    console.log(movieData);
-
-    
-    let stackBarYearDict = {}
-
-    // Format data for each use
-    movieData.forEach(movie => {
-        // console.log(movie)
-        let year = movie["year"];
-        // console.log(typeof stackBarYearDict[year])
-        // console.log(typeof(stackBarYearDict[year]) == "undefined")
-        if (typeof(stackBarYearDict[year]) === "undefined") {
-            // console.log("in here")
-            stackBarYearDict[year] = {
-                "nowomen": 0,
-                "nowomen-disagree": 0,
-                "men-disagree": 0,
-                "dubious": 0,
-                "men": 0,
-                "dubious-disagree": 0,
-                "notalk": 0,
-                "notalk-disagree": 0,
-                "ok": 0,
-                "ok-disagree": 0
-            }
-        }
-
-        // let previousVal = stackBarYearDict[year][movie["test"]];
-        // stackBarYearDict[year][movie["test"]] = previousVal + 1;
-        stackBarYearDict[year][movie["test"]] += 1;
-    })
-
-    console.log(stackBarYearDict);
+    // console.log(movieData);
 
     // Configure padding around graph
     let stackBarPadding = {
@@ -95,5 +63,8 @@ d3.csv("movies.csv", (error, movieData) => {
     d3.selectAll("path.domain").remove();
 
     // Add Data to graph
-    // movieData.foreach()
+    movieData.forEach(movie => {
+        // console.log(movie)
+        
+    });
 })
