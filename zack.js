@@ -31,8 +31,9 @@ d3.json("testfailures.json", (error, movieData) => {
     // let stackBarMaxYear = 2013;
     let startYear = 1990;
     let endYear = 2013;
-    let years = [...Array(endYear - startYear + 1).keys()]
-        .map(x => x + startYear);
+    // let years = [...Array(endYear - startYear + 1).keys()]
+    //     .map(x => x + startYear);
+    years = movieData.map((x, i) => i)
 
     console.log(years)
 
@@ -88,9 +89,12 @@ d3.json("testfailures.json", (error, movieData) => {
     ]
 
     let colors = d3.scale.category10();
+    let verticalSpacing = 5.0
 
-    movieData.filter(x => x[0] >= startYear)
-        .forEach(yearData => {
+    movieData
+        // .filter(x => x[0] >= startYear)
+        .forEach((yearData, yearIndex) => {
+            console.log(yearIndex)
             // console.log(movie)
             var currentY = stackBarHeight;
 
@@ -99,16 +103,16 @@ d3.json("testfailures.json", (error, movieData) => {
                 // console.log("Year: " + yearData[0] + "; TestName: " + testName + "; " + yearData[1][testName]);
                 let barTopY = stackBarYScale(yearData[1][testName]);
                 let height = stackBarHeight - barTopY;
-                console.log("Testval: " + yearData[1][testName] + "; barTopY: " + String(barTopY) + "; height: " + height + "; currentY: " + currentY);
+                // console.log("Testval: " + yearData[1][testName] + "; barTopY: " + String(barTopY) + "; height: " + height + "; currentY: " + currentY);
                 stackBarSvg.append("rect")
                     .attr("width", stackBarXScale.rangeBand())
                     // .attr("height", stackBarYScale(parseFloat(yearData[1][testName])))
-                    .attr("height", height)
-                    .attr("x", stackBarXScale(parseInt(yearData[0])))
+                    .attr("height", height - verticalSpacing / 2)
+                    .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
                     .style("fill", colors(index >= 4 ? 0 : 1))
 
-                console.log(colors(index))
+                // console.log(colors(index))
                 currentY -= height;
             })
 
