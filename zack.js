@@ -7,6 +7,34 @@ d3.json("testfailures.json", (error, movieData) => {
 
     // console.log(movieData);
 
+    
+    let stackBarTestNames = [
+        // 'ok',                        // passes bechdel test
+        // 'ok-disagree',               // passes bechdel test (not unanimous opinion)
+        // 'dubious',                   // doubtful that it passes the test
+        // 'dubious-disagree',
+        'men', // women talk to each other, but only about men
+        'men-disagree',
+        'notalk', // women don't talk to each other
+        'notalk-disagree',
+        'nowomen', // no women in the movie
+        'nowomen-disagree',
+
+    ]
+
+    let stackBarTestKeyToFullNameDict = {
+        'ok': "Passes Bechdel Test",    
+        'ok-disagree': "Passes Bechdel Test (Some Disagreement)",    
+        'dubious': "Doubtful",   
+        'dubious-disagree': "Doubtful ",
+        'men',
+        'men-disagree',
+        'notalk', 
+        'notalk-disagree',
+        'nowomen',  
+        'nowomen-disagree',
+    }
+
     // Configure padding around graph
     let stackBarPadding = {
         top: 50,
@@ -15,13 +43,16 @@ d3.json("testfailures.json", (error, movieData) => {
         right: 50
     }
 
+
+    let stackBarLegendWidth = 50;
+
     let stackBarContainerSvg = d3.select("svg#zack");
 
     let stackBarSvg = stackBarContainerSvg.append("g")
         .attr("transform", "translate(" + stackBarPadding.left + "," + stackBarPadding.top + ")");
 
 
-    let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right;
+    let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right - stackBarLegendWidth;
     let stackBarHeight = stackBarContainerSvg.attr("height") - stackBarPadding.top - stackBarPadding.bottom;
 
     console.log(stackBarWidth);
@@ -74,22 +105,9 @@ d3.json("testfailures.json", (error, movieData) => {
     d3.selectAll("path.domain").remove();
 
     // Add Data to graph
-    let tests = [
-        'ok',
-        'ok-disagree',
-        'dubious',
-        'dubious-disagree',
-        'men',
-        'men-disagree',
-        'notalk',
-        'notalk-disagree',
-        'nowomen',
-        'nowomen-disagree',
 
-    ]
-
-    let colors = d3.scale.category10();
-    let verticalSpacing = 5.0
+    let stackBarColorScale = d3.scale.category10();
+    let verticalSpacing = 1;
 
     movieData
         // .filter(x => x[0] >= startYear)
@@ -98,7 +116,7 @@ d3.json("testfailures.json", (error, movieData) => {
             // console.log(movie)
             var currentY = stackBarHeight;
 
-            tests.forEach((testName, index) => {
+            stackBarTestNames.forEach((testName, index) => {
                 // console.log(yearData[1][testName])
                 // console.log("Year: " + yearData[0] + "; TestName: " + testName + "; " + yearData[1][testName]);
                 let barTopY = stackBarYScale(yearData[1][testName]);
@@ -107,14 +125,51 @@ d3.json("testfailures.json", (error, movieData) => {
                 stackBarSvg.append("rect")
                     .attr("width", stackBarXScale.rangeBand())
                     // .attr("height", stackBarYScale(parseFloat(yearData[1][testName])))
-                    .attr("height", height - verticalSpacing / 2)
+                    .attr("height", Math.max(height - verticalSpacing, 0))
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
-                    .style("fill", colors(index >= 4 ? 0 : 1))
+                    .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
 
                 // console.log(colors(index))
                 currentY -= height;
             })
 
         });
+
+
+    // Create legend for colors
+    let stackBarLegendHeight = stackBarHeight / 2;
+
+    let stackBarLegend = stackBarSvg.append("g")
+        .attr("class", "legend")
+        .attr("width", stackBarLegendWidth)
+        .attr("height", stackBarLegendHeight)
+        .attr("transform", "translate(" + (stackBarPadding.left + stackBarWidth - stackBarLegendWidth) + "," + (stackBarPadding.top) +
+            ")");
+
+    stackBarTestNames.forEach((testName, index) => {
+        let stackBarCurrentLegendItem = stackBarLegend.append("g")
+            .attr("class", "legend-item")
+            .attr("width", stackBarLegendWidth)
+            .attr("transform", "translate(0," +
+                (index * stackBarLegendHeight / (stackBarTestNames.length * 1.0)) +
+                ")");
+
+
+        stackBarCurrentLegendItem.append("rect")
+            .attr("width", "20")
+            .attr("height", "20")
+            .attr("id", testName)
+            .style("fill", stackBarColorScale(index))
+
+        stackBarCurrentLegendItem.append("text")
+            .text(testName)
+            .attr("dx", "25")
+            .attr("dy", "15")
+            .attr("font-size", "10")
+            .attr("font-family", "Arial")
+            .attr("id", testName + "_label")
+    });
+
+
 })
