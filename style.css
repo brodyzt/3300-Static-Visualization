@@ -1,3 +1,9 @@
 #mapTitle {
-    margin-top: 50px
+    margin-top: 50px;
+}
+
+div {
+    position: relative; 
+    margin: auto; 
+    text-align:center
 }

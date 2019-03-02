@@ -49,12 +49,13 @@ d3.json("testfailures.json", (error, movieData) => {
 
     let stackBarContainerSvg = d3.select("svg#zack");
 
-    let stackBarSvg = stackBarContainerSvg.append("g")
-        .attr("transform", "translate(" + stackBarPadding.left + "," + stackBarPadding.top + ")");
-
-
+    
     let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right - stackBarLegendWidth;
     let stackBarHeight = stackBarContainerSvg.attr("height") - stackBarPadding.top - stackBarPadding.bottom;
+
+    let stackBarSvg = stackBarContainerSvg.append("g")
+        .attr("transform", "translate(" + ( stackBarContainerSvg.attr("width") / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");
+
 
     console.log(stackBarWidth);
 
@@ -129,7 +130,7 @@ d3.json("testfailures.json", (error, movieData) => {
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
                     .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
-                    .style("opacity", 0.75 - (index % 2) * 0.25)
+                    .style("opacity", 0.75 - (index % 2) * 0.35)
 
                 // console.log(colors(index))
                 currentY -= height;
@@ -139,13 +140,13 @@ d3.json("testfailures.json", (error, movieData) => {
 
 
     // Create legend for colors
-    let stackBarLegendHeight = stackBarHeight / 2;
+    let stackBarLegendHeight = stackBarHeight / 3;
 
-    let stackBarLegend = stackBarSvg.append("g")
+    let stackBarLegend = stackBarContainerSvg.append("g")
         .attr("class", "legend")
         .attr("width", stackBarLegendWidth)
         .attr("height", stackBarLegendHeight)
-        .attr("transform", "translate(" + (stackBarWidth + stackBarPadding.betweenLegend) + "," + (0) +
+        .attr("transform", "translate(" + (stackBarContainerSvg.attr("width") / 2.0 + stackBarWidth / 2.0 + stackBarPadding.betweenLegend) + "," + (0) +
             ")");
 
     stackBarTestNames.forEach((testName, index) => {
@@ -162,7 +163,7 @@ d3.json("testfailures.json", (error, movieData) => {
             .attr("height", "20")
             .attr("id", testName)
             .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
-            .style("opacity", 0.75 - (index % 2) * 0.25)
+            .style("opacity", 0.75 - (index % 2) * 0.35)
 
         stackBarCurrentLegendItem.append("text")
             .text(stackBarTestKeyToFullNameDict[testName])
