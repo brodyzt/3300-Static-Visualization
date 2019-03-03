@@ -1,9 +1,4 @@
-d3.json("testfailures.json", (error, movieData) => {
-
-    // Output error to console if data can't be loaded
-    if (error) {
-        return console.warn(error);
-    }
+d3.json("testfailures.json").then(movieData => {
 
     // console.log(movieData);
 
@@ -41,7 +36,7 @@ d3.json("testfailures.json", (error, movieData) => {
         bottom: 50,
         left: 50,
         right: 50,
-        betweenLegend: 20
+        betweenLegend: -200
     }
 
 
@@ -49,12 +44,12 @@ d3.json("testfailures.json", (error, movieData) => {
 
     let stackBarContainerSvg = d3.select("svg#zack");
 
-    
+
     let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right - stackBarLegendWidth;
     let stackBarHeight = stackBarContainerSvg.attr("height") - stackBarPadding.top - stackBarPadding.bottom;
 
     let stackBarSvg = stackBarContainerSvg.append("g")
-        .attr("transform", "translate(" + ( stackBarContainerSvg.attr("width") / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");
+        .attr("transform", "translate(" + (stackBarContainerSvg.attr("width") / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");
 
 
     console.log(stackBarWidth);
@@ -70,45 +65,116 @@ d3.json("testfailures.json", (error, movieData) => {
 
     console.log(years)
 
-    let stackBarXScale = d3.scale.ordinal()
+    let stackBarXScale = d3.scaleBand()
         .domain(years)
-        .rangeRoundBands([0, stackBarWidth], 0.1);
+        .range([0, stackBarWidth])
+        .paddingInner(0.1);
 
-    let stackBarYScale = d3.scale.linear()
+    console.log(stackBarXScale.bandwidth())
+
+    let stackBarYScale = d3.scaleLinear()
         .domain([0, 1])
         .range([stackBarHeight, 0]);
 
     // Create axis SVG components
-    let stackBarXAxis = d3.svg.axis()
+    let stackBarXAxis = d3.axisBottom()
         .scale(stackBarXScale)
-        .orient("bottom")
-        .tickSize(-stackBarHeight)
-        .tickFormat(yearVal => yearVal % 3 == 0 ? yearVal : "")
-    let stackBarYAxis = d3.svg.axis()
+        .tickSize(-20)
+        .tickFormat(yearVal => {
+            let lowerBound = yearVal * 2 + 1970;
+            let upperBound = lowerBound + 1;
+            return yearVal % 3 == 0 ? String(lowerBound) + "- " + String(upperBound) : ""
+        })
+    let stackBarYAxis = d3.axisLeft()
         .scale(stackBarYScale)
-        .orient("left")
         .ticks(5)
         .tickSize(-stackBarWidth)
-        .tickFormat(d3.format("%"))
+        .tickFormat(d3.format(".0%"))
 
     // Append axis SVG components to DOM
     let stackBarXAxisSVGComponent = stackBarSvg.append("g")
         .attr("transform", "translate(0," + (stackBarHeight) + ")")
-        .call(stackBarXAxis);
+        .attr("class", "x")
+        .call(stackBarXAxis)
+
+    d3.selectAll(".x .tick text")
+        .call(labelGroup => {
+            console.log(labelGroup)
+            labelGroup.each(label => {
+                let self = d3.select(this);
+                console.log(self);
+                let retrieved_text = self.text();
+                console.log(retrieved_text)
+                // self.text(null);
+
+                if (retrieved_text !== undefined) {
+                    console.log(retrieved_text)
+                    let split_text = retrieved_text.split(" ")
+                    self.text(null);
+                    self.append("tspan")
+                        .attr("x", 0)
+                        .attr("dy", ".8em")
+                        .text(split_text[0]);
+                    self.append("tspan")
+                        .attr("x", 0)
+                        .attr("dy", ".8em")
+                        .text(split_text[1]);
+                }
+            });
+        });
+
     let stackBarYAxisSVGComponent = stackBarSvg.append("g")
         .attr("transform", "translate(0,0)")
+        .attr("class", "y")
         .call(stackBarYAxis);
 
-    stackBarYAxisSVGComponent.selectAll(".tick:not(:first-of-type) line").attr("stroke", "#777").attr('stroke-width',
-        '.75px')
-    stackBarYAxisSVGComponent.selectAll(".tick text").attr("y", 0).attr("dx", 0);
+    stackBarXAxisSVGComponent.selectAll(".tick line").attr("stroke", "#000000").attr("transform", "translate(0,20)")
+        .style("stroke-width", (d, i) => {
+        console.log(i)
+        console.log(this)
+            // if (i % 3 != 0)  d3.select(this).remove();
+            if (i % 3 == 0) {
+                return "1px"
+            } else {
+                return "0px"
+            }
+        })
+    stackBarXAxisSVGComponent.selectAll(".tick text").attr("y", 20).attr("dx", 0);
+
+
+    stackBarYAxisSVGComponent.selectAll(".tick:first-of-type line").attr("stroke", "#000000").attr('stroke-width',
+        '1px')
+    stackBarYAxisSVGComponent.selectAll(".tick:not(first-of-type) line").attr("stroke", "#000000").attr('stroke-width',
+        '0px')
+    stackBarYAxisSVGComponent.selectAll(".tick text").attr("y", 0).attr("dx", -10);
+
+    // Add left edge for x axis
+    stackBarSvg.append("line")
+        .attr("x1", 0)
+        .attr("x2", 0)
+        .attr("y1", 0)
+        .attr("y2", stackBarHeight)
+        .attr("stroke", "#000000")
+        .attr("stroke-width", "2px")
+        .attr("class", "yAxisBoundary")
+
+    // Add left edge for y axis
+    stackBarSvg.append("line")
+        .attr("x1", 0)
+        .attr("x2", stackBarWidth)
+        .attr("y1", stackBarHeight)
+        .attr("y2", stackBarHeight)
+        .attr("stroke", "#000000")
+        .attr("stroke-width", "2px")
+        .attr("class", "yAxisBoundary")
+
 
     // Remove domain components garbage
     d3.selectAll("path.domain").remove();
 
     // Add Data to graph
 
-    let stackBarColorScale = d3.scale.category10();
+    let stackBarColorScale = d3.schemeCategory10;
     let verticalSpacing = 1;
 
     movieData
@@ -124,12 +190,12 @@ d3.json("testfailures.json", (error, movieData) => {
                 let height = stackBarHeight - barTopY;
                 // console.log("Testval: " + yearData[1][testName] + "; barTopY: " + String(barTopY) + "; height: " + height + "; currentY: " + currentY);
                 stackBarSvg.append("rect")
-                    .attr("width", stackBarXScale.rangeBand())
+                    .attr("width", stackBarXScale.bandwidth)
                     // .attr("height", stackBarYScale(parseFloat(yearData[1][testName])))
                     .attr("height", Math.max(height - verticalSpacing, 0))
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
-                    .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
+                    .style("fill", stackBarColorScale[Math.floor(index / 2.0) * 2.0])
                     .style("opacity", 0.75 - (index % 2) * 0.35)
 
                 // console.log(colors(index))
@@ -162,7 +228,7 @@ d3.json("testfailures.json", (error, movieData) => {
             .attr("width", "20")
             .attr("height", "20")
             .attr("id", testName)
-            .style("fill", stackBarColorScale(Math.floor(index / 2.0) * 2.0))
+            .style("fill", stackBarColorScale[Math.floor(index / 2.0) * 2.0])
             .style("opacity", 0.75 - (index % 2) * 0.35)
 
         stackBarCurrentLegendItem.append("text")
