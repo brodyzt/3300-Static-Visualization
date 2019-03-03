@@ -24,9 +24,9 @@ d3.json("testfailures.json").then(movieData => {
         'dubious-disagree': "Doubtful (Disagreement)",
         'men': "Only Talk About Men",
         'men-disagree': "Only Talk About Men (Disagreement)",
-        'notalk': "Women Do Not Talk To Each Other",
-        'notalk-disagree': "Women Do Not Talk To Each Other (Some Disagreement)",
-        'nowomen': "No Women In Movie",
+        'notalk': "Women Don't Talk to Each Other",
+        'notalk-disagree': "Women Don't Talk to Each Other (Disagreement)",
+        'nowomen': "No Women",
         'nowomen-disagree': "No Women (Disagreement)",
     }
 
@@ -36,7 +36,7 @@ d3.json("testfailures.json").then(movieData => {
         bottom: 50,
         left: 50,
         right: 50,
-        betweenLegend: -200
+        betweenLegend: -250
     }
 
 
