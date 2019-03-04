@@ -5,16 +5,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 </head>
 
-<body>
+<body class="mdc-typography">
 
-    <div class="verticalContainer mdc-elevation--z3" style="background-color:gray">
-        <h1 id="title">Female Representation in Movies</h1>
-        <div class="container">
-            <h2>Overview</h2>
-            <p class="description">
+    <div class="verticalContainer">
+        <h1 id="title" class="mdc-typography--headline1">Female Representation in Movies</h1>
+        <div class="titleContainer">
+            <p class="mdc-typography--headline6">
                 Inherent issues in society are often mirrored in said society's contemporary media. Due to this fact,
                 taking a more detailed and in depth look into media can illustrate these prevalent patterns. In this
                 data visualization, we seek to illustrate the differences in various factors between movies that pass
@@ -25,10 +24,10 @@
         </div>
     </div>
 
-    <div class="container mdc-elevation--z8">
+    <div class="container mdc-elevation--z24">
         <svg id="stackBarGraph" width="1200" height="800"></svg>
         <aside class="aside right">
-            <h2>Failure Type By Year</h2>
+            <h2 class="mdc-typography--headline2">Failure Type By Year</h2>
             <p>
                 The Bechdel test has multiple categories of movies that can fail. This graph shoes the trend in each of
                 these categories over time. The categories of failure are as follows. "No Women" means there were no
@@ -46,9 +45,9 @@
         <script src="zack.js"></script>
     </div>
 
-    <div class="container mdc-elevation--z8">
+    <div class="container mdc-elevation--z24">
         <aside class="aside left">
-            <h2>Avg. Rating vs. Year</h2>
+            <h2 class="mdc-typography--headline2">Avg. Rating vs. Year</h2>
             <p>
                 This graph illustrates the progression of movies that pass and fail the Bechdel Test over the last
                 thirty-five years in relation to their average IMDB rating. While there is some variation year to year,
@@ -64,10 +63,10 @@
 
 
 
-    <div class="container mdc-elevation--z8">
+    <div class="container mdc-elevation--z24">
         <svg id="eldor" width="1200" height="800"></svg>
         <aside class="aside right">
-            <h2>Gross vs. Year</h2>
+            <h2 class="mdc-typography--headline2">Gross vs. Year</h2>
             <p>
                 Need to fill out
             </p>

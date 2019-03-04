@@ -2,20 +2,12 @@
     margin-top: 50px;
 }
 
-#titleDiv {
-    height: 100vh;
-    vertical-align: middle;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-div {
+/* div {
     position: relative;
     margin: auto;
     text-align: center;
     background-color: white;
-}
+} */
 
 h1, h2 {
     font-family: Ubuntu, sans-serif;
@@ -33,9 +25,9 @@ h2 {
     /* margin:100px */
 }
 
-.description {
-    text-align: left;
-    width: 500px;
+.titleContainer p {
+    text-align: center;
+    width: 1000px;
 }
 
 .gridlines line {
@@ -56,16 +48,28 @@ td {
     align-items: center;
     justify-content: center;
     border-radius: 50px;
-    /* box-shadow: 10px 10px 5px grey; */
+}
+
+
+.titleContainer {
+    /* margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 80px; */
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row ;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
 }
 
 .verticalContainer {
+    margin-top: 200px;
     display: flex;
     flex-direction: column ;
     align-items: center;
     justify-content: center;
-    border-radius: 50px;
-    /* height: 100vh */
+    /* border-radius: 50px; */
 }
 
 svg {
@@ -79,13 +83,11 @@ svg {
 
 .tick text {
     font-size: 15;
-    ont-family: Ubuntu, sans-serif;
     font-style: normal;
 }
  
 g text {
     font-size: 15;
-    ont-family: Ubuntu, sans-serif;
     font-style: normal;
 }
 
