@@ -3,10 +3,10 @@ d3.csv("original_with_ratings.csv").then(function (data) {
     movieData = data
     let timeGraphContainerSvg = d3.select("svg#timeGraph");
     let padding = {
-        "top": 50,
-        "bottom": 50,
-        "right": 50,
-        "left": 50
+        "top": 100,
+        "bottom": 100,
+        "right": 100,
+        "left": 100
     };
 
     
@@ -43,25 +43,25 @@ d3.csv("original_with_ratings.csv").then(function (data) {
     let yearScale = d3.scaleLinear().domain([1980, 2015]).range([0, timeGraphWidth]);
     let ratingScale = d3.scaleLinear().domain([5, 8]).range([timeGraphHeight, 0])
     let xAxis = d3.axisBottom(yearScale).tickFormat(d3.format(".0f"));
-    let yAxis = d3.axisLeft(ratingScale).ticks(5);
+    let yAxis = d3.axisRight(ratingScale).ticks(5);
 
-    svg.append("g").style("font-size", "7")
-        .attr("transform", "translate(" + 0 + "," + 0 + ")")
+    svg.append("g").style("font-size", "15")
+        .attr("transform", "translate(" + timeGraphWidth + "," + 0 + ")")
         .call(yAxis);
-    svg.append("g").style("font-size", "7")
+    svg.append("g").style("font-size", "15")
         .attr("transform", "translate(" + 0 + "," + (timeGraphHeight) + ")")
         .call(xAxis);
 
     let yGrid = d3.axisLeft(ratingScale).tickSize(-timeGraphWidth).tickFormat("");
     let xGrid = d3.axisBottom(yearScale).tickSize(-timeGraphHeight).tickFormat("");
-    svg.append("g")
-        .attr("class", "gridlines")
-        .attr("transform", "translate(" + 0 + "," + 0 + ")")
-        .call(yGrid);
-    svg.append("g")
-        .attr("class", "gridlines")
-        .attr("transform", "translate(" + 0 + "," + (timeGraphHeight) + ")")
-        .call(xGrid);
+    // svg.append("g")
+    //     .attr("class", "gridlines")
+    //     .attr("transform", "translate(" + 0 + "," + 0 + ")")
+    //     .call(yGrid);
+    // svg.append("g")
+    //     .attr("class", "gridlines")
+    //     .attr("transform", "translate(" + 0 + "," + (timeGraphHeight) + ")")
+    //     .call(xGrid);
 
 
     let passed_rating_dict = {};
@@ -134,17 +134,38 @@ d3.csv("original_with_ratings.csv").then(function (data) {
         finalFailedArray.push(currObject);
     };
 
-    let path = d3.line().x(d => yearScale(d.year) + 30).y(d => ratingScale(d.val) + 30);
+    let legendXInset = -50;
+
+    let path = d3.line().x(d => yearScale(d.year)).y(d => ratingScale(d.val) + 30);
     let currentGraph = svg;
     currentGraph.append("path").attr("stroke", 'red').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalFailedArray).attr("d", path);
     currentGraph.append("path").attr("stroke", 'green').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalPassedArray).attr("d", path);
-    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth / 2.0) + "," + (padding.top + timeGraphHeight + padding.bottom / 2.0) + ")").style("text-anchor", "middle").text("Year")
-    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left / 2.0) + "," + (timeGraphHeight / 2.0 + padding.top) + ")rotate(270)").style("text-anchor", "middle").style("font-size", "9").text("IMDB Rating")
-    svg.append("line").style("stroke", "red").attr("x1", 750).attr("y1", 60).attr("x2", 760).attr("y2", 60);
-    svg.append("text").attr("transform", "translate(" + 770 + "," + 63 + ")").style("font-size", "9").text("Failed Bachdel Test");
-    svg.append("line").style("stroke", "green").attr("x1", 750).attr("y1", 70).attr("x2", 760).attr("y2", 70);
-    svg.append("text").attr("transform", "translate(" + 770 + "," + 73 + ")").style("font-size", "9").text("Passed Bachdel Test");
+    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth / 2.0) + "," + (padding.top + timeGraphHeight + padding.bottom / 2.0) + ")").style("text-anchor", "middle").style("font-size", "18").text("Year")
+    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth + padding.right / 2.0) + "," + (timeGraphHeight / 2.0 + padding.top) + ")rotate(90)").style("text-anchor", "middle").style("font-size", "18").text("IMDB Rating")
+    svg.append("line").style("stroke", "red").attr("x1", 750 - legendXInset).attr("y1", 60).attr("x2", 760 - legendXInset).attr("y2", 60);
+    svg.append("text").attr("transform", "translate(" + (770 - legendXInset) + "," + 63 + ")").style("font-size", "15").text("Failed Bechdel Test");
+    svg.append("line").style("stroke", "green").attr("x1", 750 - legendXInset).attr("y1", 79).attr("x2", 760 - legendXInset).attr("y2", 79);
+    svg.append("text").attr("transform", "translate(" + (770 - legendXInset) + "," + 83 + ")").style("font-size", "15").text("Passed Bechdel Test");
 
+    // Add left edge for y axis
+    svg.append("line")
+        .attr("x1", timeGraphWidth)
+        .attr("x2", timeGraphWidth)
+        .attr("y1", 0)
+        .attr("y2", timeGraphHeight)
+        .attr("stroke", "#000000")
+        .attr("stroke-width", "2px")
+        .attr("class", "yAxisBoundary")
+
+    // Add bottom edge for x axis
+    svg.append("line")
+        .attr("x1", 0)
+        .attr("x2", timeGraphWidth)
+        .attr("y1", timeGraphHeight)
+        .attr("y2", timeGraphHeight)
+        .attr("stroke", "#000000")
+        .attr("stroke-width", "2px")
+        .attr("class", "xAxisBoundary")
 
 
     // Remove domain components garbage

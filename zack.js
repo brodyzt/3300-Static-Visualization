@@ -26,18 +26,18 @@ d3.json("testfailures.json").then(movieData => {
         'dubious-disagree': "Doubtful (Disagreement)",
         'men': "Only Talk About Men",
         'men-disagree': "Only Talk About Men (Disagreement)",
-        'notalk': "Women Don't Talk to Each Other",
-        'notalk-disagree': "Women Don't Talk to Each Other (Disagreement)",
+        'notalk': "No W2W",
+        'notalk-disagree': "No W2W (Disagreement)",
         'nowomen': "No Women",
         'nowomen-disagree': "No Women (Disagreement)",
     }
 
     // Configure padding around graph
     let stackBarPadding = {
-        top: 50,
-        bottom: 50,
-        left: 50,
-        right: 50,
+        top: 100,
+        bottom: 100,
+        left: 100,
+        right: 100,
         betweenLegend: -250
     }
 
@@ -208,13 +208,14 @@ d3.json("testfailures.json").then(movieData => {
 
 
     // Create legend for colors
-    let stackBarLegendHeight = stackBarHeight / 3;
+    let stackBarLegendHeight = stackBarHeight / 4;
+    let stackBarLegendInset = 725;
 
-    let stackBarLegend = stackBarContainerSvg.append("g")
+    let stackBarLegend = stackBarSvg.append("g")
         .attr("class", "legend")
         .attr("width", stackBarLegendWidth)
         .attr("height", stackBarLegendHeight)
-        .attr("transform", "translate(" + (stackBarContainerSvg.attr("width") / 2.0 + stackBarWidth / 2.0 + stackBarPadding.betweenLegend) + "," + (0) +
+        .attr("transform", "translate(" + stackBarLegendInset + "," + (0) +
             ")");
 
     stackBarTestNames.reverse().forEach((testName, index) => {
@@ -237,7 +238,7 @@ d3.json("testfailures.json").then(movieData => {
             .text(stackBarTestKeyToFullNameDict[testName])
             .attr("dx", "25")
             .attr("dy", "15")
-            .attr("font-size", "10")
+            .attr("font-size", "15")
             .attr("font-family", "Arial")
             .attr("id", testName + "_label")
     });
