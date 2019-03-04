@@ -28,6 +28,11 @@ h2 {
 .titleContainer p {
     text-align: center;
     width: 1000px;
+    text-shadow:10px 10px 50px grey;
+}
+
+.verticalContainer h1 {
+    text-shadow: 10px 10px 50px grey;
 }
 
 .gridlines line {
