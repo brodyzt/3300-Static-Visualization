@@ -179,6 +179,6 @@ d3.csv("original_with_ratings.csv").then(function (data) {
 
 
 })
-//.catch(error => {
-//     console.log("Your Error is this:" + error.message);
-// });
+.catch(error => {
+    console.log("Your Error is this:" + error.message);
+});
