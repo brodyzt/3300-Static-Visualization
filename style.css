@@ -1,38 +1,25 @@
 .svg-container {
-    /* width: 100%;
-    padding-bottom: 100%;
-    vertical-align: top; */
     overflow: auto;
-    /* display: inline-block;
-    position: relative; */
     flex: 2;
 }
-/* .svg-content {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 800px;
-    width: 1200px;
-} */
+
+.container {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    display: flex;
+    flex-direction: row ;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 50px;
+}
 
 
 #title {
     margin-top: 50px;
-}
-
-/* div {
-    position: relative;
-    margin: auto;
     text-align: center;
-    background-color: white;
-} */
-
-/* h1, h2 {
-    font-family: Ubuntu, sans-serif;
-    font-style: normal;
-    font-weight: 200;
-} */
+}
 
 h1 {
     font-size: 70;
@@ -63,23 +50,8 @@ td {
     vertical-align: center
 }
 
-.container {
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-top: 150px;
-    margin-bottom: 150px;
-    display: flex;
-    flex-direction: row ;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 50px;
-}
-
 
 .titleContainer {
-    /* margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 80px; */
     margin-top: 50px;
     display: flex;
     flex-direction: row ;
@@ -95,7 +67,6 @@ td {
     flex-direction: column ;
     align-items: center;
     justify-content: center;
-    /* border-radius: 50px; */
 }
 
 svg {
