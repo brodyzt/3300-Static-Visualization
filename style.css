@@ -2,6 +2,14 @@
     margin-top: 50px;
 }
 
+#titleDiv {
+    height: 100vh;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 div {
     position: relative;
     margin: auto;
@@ -21,10 +29,7 @@ h1 {
 h2 {
     font-size: 30;
     vertical-align: center;
-}
-
-.header {
-    vertical-align: center;
+    margin:100px
 }
 
 .description {
@@ -43,12 +48,20 @@ td {
 .container {
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 150px;
+    margin-bottom: 150px;
     display: flex;
     flex-direction: row ;
     align-items: center;
     justify-content: center;
+}
+
+.verticalContainer {
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    justify-content: center;
+    height: 100vh
 }
 
 svg {
