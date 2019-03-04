@@ -123,7 +123,7 @@ d3.json("testfailures.json").then(movieData => {
         .attr("stroke", "#000000")
         .attr('stroke-width','2px')
         .attr("transform", "translate(0,-0.5)")
-    stackBarYAxisSVGComponent.selectAll(".tick text").attr("y", 0).attr("dx", -10);
+    stackBarYAxisSVGComponent.selectAll(".tick text").attr("y", 0).attr("dx", 0);
 
     // Add left edge for x axis
     stackBarSvg.append("line")
