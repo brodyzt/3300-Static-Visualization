@@ -165,7 +165,7 @@ d3.json("eldor.json").then(function (movieData) {
         .attr("class", "axesLabel")
         .text("Year")
     svg.append("text")
-        .attr("transform", "translate(" + (margin.left / 2.0 - 10) + "," + (chartHeight / 2.0 + margin.top) + ")rotate(270)")
+        .attr("transform", "translate(" + (margin.left / 2.0 - 20) + "," + (chartHeight / 2.0 + margin.top) + ")rotate(270)")
         .style("text-anchor", "middle")
         .attr("class", "axesLabel")
         .text("International Gross ($)")
