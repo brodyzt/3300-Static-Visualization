@@ -1,5 +1,7 @@
 d3.json("testfailures.json").then(movieData => {
 
+    console.log(d3.schemeCategory10)
+
     // console.log(movieData);
 
 
@@ -45,7 +47,7 @@ d3.json("testfailures.json").then(movieData => {
     let stackBarContainerSvg = d3.select("svg#stackBarGraph");
 
 
-    let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right - stackBarLegendWidth;
+    let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right;
     let stackBarHeight = stackBarContainerSvg.attr("height") - stackBarPadding.top - stackBarPadding.bottom;
 
     let stackBarSvg = stackBarContainerSvg.append("g")
@@ -174,7 +176,7 @@ d3.json("testfailures.json").then(movieData => {
 
     // Add Data to graph
 
-    let stackBarColorScale = ["red", "orange", "purple"];
+    let stackBarColorScale = ["#004cff","#ff8300", "red"];
     let verticalSpacing = 1;
 
     movieData
@@ -195,7 +197,7 @@ d3.json("testfailures.json").then(movieData => {
                     .attr("height", Math.max(height - verticalSpacing, 0))
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
-                    .style("fill", stackBarColorScale[Math.floor(index / 2.0) * 2.0])
+                    .style("fill", stackBarColorScale[Math.floor(index / 2.0)])
                     .style("opacity", 0.75 - (index % 2) * 0.35)
 
                 // console.log(colors(index))
@@ -215,7 +217,7 @@ d3.json("testfailures.json").then(movieData => {
         .attr("transform", "translate(" + (stackBarContainerSvg.attr("width") / 2.0 + stackBarWidth / 2.0 + stackBarPadding.betweenLegend) + "," + (0) +
             ")");
 
-    stackBarTestNames.forEach((testName, index) => {
+    stackBarTestNames.reverse().forEach((testName, index) => {
         let stackBarCurrentLegendItem = stackBarLegend.append("g")
             .attr("class", "legend-item")
             .attr("width", stackBarLegendWidth)
@@ -228,7 +230,7 @@ d3.json("testfailures.json").then(movieData => {
             .attr("width", "20")
             .attr("height", "20")
             .attr("id", testName)
-            .style("fill", stackBarColorScale[Math.floor(index / 2.0) * 2.0])
+            .style("fill", stackBarColorScale[Math.floor((stackBarTestNames.length - 1 - index) / 2.0)])
             .style("opacity", 0.75 - (index % 2) * 0.35)
 
         stackBarCurrentLegendItem.append("text")

@@ -8,14 +8,32 @@ div {
     text-align: center
 }
 
-h1 {
+h1, h2 {
     font-family: jaf-domus-titling-web, sans-serif;
     font-style: normal;
     font-weight: 200;
     padding-top: 50px;
-    font-size: 70
+}
+
+h1 {
+    font-size: 70;
+}
+
+h2 {
+    font-size: 30;
+    vertical-align: center;
 }
 
 .gridlines line {
     stroke: lightgrey
+}
+
+td {
+    vertical-align: center
+}
+
+.container {
+    display: flex;
+    flex-direction: row ;
+    align-items: center;
 }
