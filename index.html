@@ -3,34 +3,51 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.1/d3.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="verticalContainer">
+    <div class="verticalContainer mdc-elevation--z3" style="background-color:gray">
         <h1 id="title">Female Representation in Movies</h1>
         <div class="container">
             <h2>Overview</h2>
             <p class="description">
-                    Inherent issues in society are often mirrored in said society's contemporary media. Due to this fact,
-                    taking a more detailed and in depth look into media can illustrate these prevalent patterns. In this
-                    data visualization, we seek to illustrate the differences in various factors between movies that pass
-                    and fail the Bechdel Test, a test that evaluates whether or not the movie in question contains an
-                    instance of two women talking about something other than men, viewing the data at different angles to
-                    reveal patterns and trends that illuminate how American society viewed women in the past decades.
-                </p>
+                Inherent issues in society are often mirrored in said society's contemporary media. Due to this fact,
+                taking a more detailed and in depth look into media can illustrate these prevalent patterns. In this
+                data visualization, we seek to illustrate the differences in various factors between movies that pass
+                and fail the Bechdel Test, a test that evaluates whether or not the movie in question contains an
+                instance of two women talking about something other than men, viewing the data at different angles to
+                reveal patterns and trends that illuminate how American society viewed women in the past decades.
+            </p>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container mdc-elevation--z8">
         <svg id="stackBarGraph" width="1200" height="800"></svg>
-        <h2>Type of Test Failures By Year</h2>
+        <aside class="aside right">
+            <h2>Type of Test Failures By Year</h2>
+            <p>
+                The Bechdel test has multiple categories of movies that can fail. This graph shoes the trend in each of
+                these categories over time. The categories of failure are as follows. "No Women" means there were no
+                significant female roles. "No W2W" means there wasn't any communication between two female characters.
+                "Only Talk About Men" means female characters talked to each other, but only about the subject of men.
+                "Disagreement" means that the reviewers for these movies didn't agree 100% on the movies in that
+                category. As
+                seen by the total height of the bars, the overall trend is movies are
+                failing less frequently as time goes on. Another notable trend is that there are substantially less No
+                W2W
+                failures now than in 1970.
+            </p>
+        </aside>
+
         <script src="zack.js"></script>
     </div>
 
-
-    <div class="container">
-        <aside class="aside">
+    <div class="container mdc-elevation--z8">
+        <aside class="aside left">
             <h2>Average IMBD Rating vs Year</h2>
             <p>
                 This graph illustrates the progression of movies that pass and fail the Bechdel Test over the last
@@ -40,6 +57,17 @@
         <svg id="timeGraph" width="1200" height="800"></svg>
         <script src="time_graph.js"></script>
     </div>
+
+
+
+    <div class="container mdc-elevation--z8">
+        <svg id="eldor" width="1200" height="800"></svg>
+        <aside class="aside right">
+                <h2>Bechdel Test Comparing Gross vs Year</h2>
+        </aside>
+        <script src="eldor.js"></script>
+    </div>
+
 
 </body>
 

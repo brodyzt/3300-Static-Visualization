@@ -13,13 +13,13 @@ d3.csv("original_with_ratings.csv").then(function (data) {
     let timeGraphWidth = timeGraphContainerSvg.attr("width") - padding.left - padding.right;
     let timeGraphHeight = timeGraphContainerSvg.attr("height") - padding.top - padding.bottom;
 
-    console.log(timeGraphHeight)
+    // console.log(timeGraphHeight)
 
 
     let svg = timeGraphContainerSvg.append("g")
         .attr("transform", "translate(" + (timeGraphContainerSvg.attr("width") / 2.0 - timeGraphWidth / 2.0) + "," + padding.top + ")")
 
-    console.log("here")
+    // console.log("here")
 
     movieData.forEach(function (data, index) {
         data['year_num'] = Number(data['year'])
@@ -42,18 +42,23 @@ d3.csv("original_with_ratings.csv").then(function (data) {
     });
     let yearScale = d3.scaleLinear().domain([1980, 2015]).range([0, timeGraphWidth]);
     let ratingScale = d3.scaleLinear().domain([5, 8]).range([timeGraphHeight, 0])
-    let xAxis = d3.axisBottom(yearScale).tickFormat(d3.format(".0f"));
-    let yAxis = d3.axisRight(ratingScale).ticks(5);
+    let xAxis = d3.axisBottom(yearScale).tickFormat(d3.format(".0f")).tickSize(10);
+    let yAxis = d3.axisRight(ratingScale).ticks(5).tickSize(10);
 
     svg.append("g").style("font-size", "15")
-        .attr("transform", "translate(" + timeGraphWidth + "," + 0 + ")")
-        .call(yAxis);
+        .attr("transform", "translate(" + timeGraphWidth + "," + -0.5 + ")")
+        .call(yAxis)
+        .selectAll(".tick line")
+        .attr("stroke-width", "2px");
     svg.append("g").style("font-size", "15")
-        .attr("transform", "translate(" + 0 + "," + (timeGraphHeight) + ")")
-        .call(xAxis);
+        .attr("transform", "translate(" + -0.5 + "," + (timeGraphHeight) + ")")
+        .call(xAxis)
+        .selectAll(".tick line")
+        .attr("stroke-width", "2px");
 
     let yGrid = d3.axisLeft(ratingScale).tickSize(-timeGraphWidth).tickFormat("");
     let xGrid = d3.axisBottom(yearScale).tickSize(-timeGraphHeight).tickFormat("");
+
     // svg.append("g")
     //     .attr("class", "gridlines")
     //     .attr("transform", "translate(" + 0 + "," + 0 + ")")
@@ -139,12 +144,12 @@ d3.csv("original_with_ratings.csv").then(function (data) {
     let path = d3.line().x(d => yearScale(d.year)).y(d => ratingScale(d.val) + 30);
     let currentGraph = svg;
     currentGraph.append("path").attr("stroke", 'red').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalFailedArray).attr("d", path);
-    currentGraph.append("path").attr("stroke", 'green').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalPassedArray).attr("d", path);
-    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth / 2.0) + "," + (padding.top + timeGraphHeight + padding.bottom / 2.0) + ")").style("text-anchor", "middle").style("font-size", "18").text("Year")
-    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth + padding.right / 2.0) + "," + (timeGraphHeight / 2.0 + padding.top) + ")rotate(90)").style("text-anchor", "middle").style("font-size", "18").text("IMDB Rating")
+    currentGraph.append("path").attr("stroke", 'blue').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalPassedArray).attr("d", path);
+    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth / 2.0) + "," + (padding.top + timeGraphHeight + padding.bottom / 2.0) + ")").style("text-anchor", "middle").attr("class", "x axesLabel").text("Year")
+    timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth + padding.right / 2.0) + "," + (timeGraphHeight / 2.0 + padding.top) + ")rotate(90)").style("text-anchor", "middle").attr("class", "y axesLabel").text("IMDB Rating")
     svg.append("line").style("stroke", "red").attr("x1", 750 - legendXInset).attr("y1", 60).attr("x2", 760 - legendXInset).attr("y2", 60);
     svg.append("text").attr("transform", "translate(" + (770 - legendXInset) + "," + 63 + ")").style("font-size", "15").text("Failed Bechdel Test");
-    svg.append("line").style("stroke", "green").attr("x1", 750 - legendXInset).attr("y1", 79).attr("x2", 760 - legendXInset).attr("y2", 79);
+    svg.append("line").style("stroke", "blue").attr("x1", 750 - legendXInset).attr("y1", 79).attr("x2", 760 - legendXInset).attr("y2", 79);
     svg.append("text").attr("transform", "translate(" + (770 - legendXInset) + "," + 83 + ")").style("font-size", "15").text("Passed Bechdel Test");
 
     // Add left edge for y axis

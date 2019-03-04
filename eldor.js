@@ -33,8 +33,8 @@ d3.json("eldor.json").then( function(movieData) {
     const yearMax =  d3.max(movieData, d => d['year']);
     const yearScale = d3.scaleLinear().domain([yearMin, yearMax]);
 
-    const xScale = yearScale.range([20, chartWidth]); // x axis
-    const yScale = budgetScale.range([chartHeight-20, 0]); // y axis
+    const xScale = yearScale.range([0, chartWidth]); // x axis
+    const yScale = budgetScale.range([chartHeight, 0]); // y axis
     const rScale = ratingScale.range([ratingMin*2, ratingMax*2]); // radius
     
     // X axis 

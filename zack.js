@@ -1,6 +1,6 @@
 d3.json("testfailures.json").then(movieData => {
 
-    console.log(d3.schemeCategory10)
+    // console.log(d3.schemeCategory10)
 
     // console.log(movieData);
 
@@ -54,7 +54,7 @@ d3.json("testfailures.json").then(movieData => {
         .attr("transform", "translate(" + (stackBarContainerSvg.attr("width") / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");
 
 
-    console.log(stackBarWidth);
+    // console.log(stackBarWidth);
 
     // Create scales for axes
     // let stackBarMinYear = 1970;
@@ -65,14 +65,15 @@ d3.json("testfailures.json").then(movieData => {
     //     .map(x => x + startYear);
     years = movieData.map((x, i) => i)
 
-    console.log(years)
+    // console.log(years)
 
     let stackBarXScale = d3.scaleBand()
         .domain(years)
         .range([0, stackBarWidth])
-        .paddingInner(0.1);
+        .paddingInner(0.1)
+        .paddingOuter(0.02);
 
-    console.log(stackBarXScale.bandwidth())
+    // console.log(stackBarXScale.bandwidth())
 
     let stackBarYScale = d3.scaleLinear()
         .domain([0, 1])
@@ -81,7 +82,7 @@ d3.json("testfailures.json").then(movieData => {
     // Create axis SVG components
     let stackBarXAxis = d3.axisBottom()
         .scale(stackBarXScale)
-        .tickSize(-20)
+        .tickSize(-10)
         .tickFormat(yearVal => {
             let lowerBound = yearVal * 2 + 1970;
             let upperBound = lowerBound + 1;
@@ -90,7 +91,7 @@ d3.json("testfailures.json").then(movieData => {
     let stackBarYAxis = d3.axisLeft()
         .scale(stackBarYScale)
         .ticks(5)
-        .tickSize(-stackBarWidth)
+        .tickSize(10)
         .tickFormat(d3.format(".0%"))
 
     // Append axis SVG components to DOM
@@ -99,55 +100,29 @@ d3.json("testfailures.json").then(movieData => {
         .attr("class", "x")
         .call(stackBarXAxis)
 
-    d3.selectAll(".x .tick text")
-        .call(labelGroup => {
-            console.log(labelGroup)
-            labelGroup.each(label => {
-                let self = d3.select(this);
-                console.log(self);
-                let retrieved_text = self.text();
-                console.log(retrieved_text)
-                // self.text(null);
-
-                if (retrieved_text !== undefined) {
-                    console.log(retrieved_text)
-                    let split_text = retrieved_text.split(" ")
-                    self.text(null);
-                    self.append("tspan")
-                        .attr("x", 0)
-                        .attr("dy", ".8em")
-                        .text(split_text[0]);
-                    self.append("tspan")
-                        .attr("x", 0)
-                        .attr("dy", ".8em")
-                        .text(split_text[1]);
-                }
-            });
-        });
-
     let stackBarYAxisSVGComponent = stackBarSvg.append("g")
         .attr("transform", "translate(0,0)")
         .attr("class", "y")
         .call(stackBarYAxis);
 
-    stackBarXAxisSVGComponent.selectAll(".tick line").attr("stroke", "#000000").attr("transform", "translate(0,20)")
+    stackBarXAxisSVGComponent.selectAll(".tick line").attr("stroke", "#000000").attr("transform", "translate(0,10)")
         .style("stroke-width", (d, i) => {
-        console.log(i)
-        console.log(this)
+            // console.log(i)
+            // console.log(this)
             // if (i % 3 != 0)  d3.select(this).remove();
             if (i % 3 == 0) {
-                return "1px"
+                return "2px"
             } else {
                 return "0px"
             }
         })
-    stackBarXAxisSVGComponent.selectAll(".tick text").attr("y", 20).attr("dx", 0);
+    stackBarXAxisSVGComponent.selectAll(".tick text").attr("y", 10).attr("dx", 0);
 
 
-    stackBarYAxisSVGComponent.selectAll(".tick:first-of-type line").attr("stroke", "#000000").attr('stroke-width',
-        '1px')
-    stackBarYAxisSVGComponent.selectAll(".tick:not(first-of-type) line").attr("stroke", "#000000").attr('stroke-width',
-        '0px')
+    stackBarYAxisSVGComponent.selectAll(".tick:not(first-of-type) line")
+        .attr("stroke", "#000000")
+        .attr('stroke-width','2px')
+        .attr("transform", "translate(0,-0.5)")
     stackBarYAxisSVGComponent.selectAll(".tick text").attr("y", 0).attr("dx", -10);
 
     // Add left edge for x axis
@@ -171,12 +146,25 @@ d3.json("testfailures.json").then(movieData => {
         .attr("class", "yAxisBoundary")
 
 
+    // Add axes labels
+    stackBarContainerSvg.append("text").
+    attr("transform", "translate(" + (stackBarPadding.left + stackBarWidth / 2.0) + "," + (stackBarPadding.top + stackBarHeight + stackBarPadding.bottom / 2.0) + ")")
+        .style("text-anchor", "middle")
+        .attr("class", "axesLabel")
+        .text("Year")
+    stackBarContainerSvg.append("text")
+        .attr("transform", "translate(" + (stackBarPadding.left / 2.0 - 10) + "," + (stackBarHeight / 2.0 + stackBarPadding.top) + ")rotate(270)")
+        .style("text-anchor", "middle")
+        .attr("class", "axesLabel")
+        .text("Percentage In Category")
+
+
     // Remove domain components garbage
     d3.selectAll("path.domain").remove();
 
     // Add Data to graph
 
-    let stackBarColorScale = ["#004cff","#ff8300", "red"];
+    let stackBarColorScale = [d3.schemeCategory10[2], "#ff8300", "red"];
     let verticalSpacing = 1;
 
     movieData
@@ -198,7 +186,7 @@ d3.json("testfailures.json").then(movieData => {
                     .attr("x", stackBarXScale(yearIndex))
                     .attr("y", barTopY - stackBarHeight + currentY)
                     .style("fill", stackBarColorScale[Math.floor(index / 2.0)])
-                    .style("opacity", 0.75 - (index % 2) * 0.35)
+                    .style("opacity", 0.75 - (index % 2) * 0.25)
 
                 // console.log(colors(index))
                 currentY -= height;
@@ -232,14 +220,12 @@ d3.json("testfailures.json").then(movieData => {
             .attr("height", "20")
             .attr("id", testName)
             .style("fill", stackBarColorScale[Math.floor((stackBarTestNames.length - 1 - index) / 2.0)])
-            .style("opacity", 0.75 - (index % 2) * 0.35)
+            .style("opacity", 0.75 - (index % 2) * 0.25)
 
         stackBarCurrentLegendItem.append("text")
             .text(stackBarTestKeyToFullNameDict[testName])
             .attr("dx", "25")
             .attr("dy", "15")
-            .attr("font-size", "15")
-            .attr("font-family", "Arial")
             .attr("id", testName + "_label")
     });
 
