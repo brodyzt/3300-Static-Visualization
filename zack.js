@@ -42,7 +42,7 @@ d3.json("testfailures.json").then(movieData => {
 
     let stackBarLegendWidth = 200;
 
-    let stackBarContainerSvg = d3.select("svg#zack");
+    let stackBarContainerSvg = d3.select("svg#stackBarGraph");
 
 
     let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right - stackBarLegendWidth;
@@ -174,7 +174,7 @@ d3.json("testfailures.json").then(movieData => {
 
     // Add Data to graph
 
-    let stackBarColorScale = d3.schemeCategory10;
+    let stackBarColorScale = ["red", "orange", "purple"];
     let verticalSpacing = 1;
 
     movieData

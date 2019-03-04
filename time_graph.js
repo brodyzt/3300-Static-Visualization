@@ -1,19 +1,7 @@
-<head>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-</head>
-<style>
-  .gridlines line {
-    stroke: lightgrey
-  }
-</style>
-<p>
-</p>
-<p id="p1">
-  <script>
-  let movieData = []
+let movieData = []
   d3.csv("original_with_ratings.csv").then(function(data) {
     movieData = data
-    let svg = d3.select("#p1").append("svg");
+    let svg = d3.select("svg#timeGraph");
     svg.attr("width", 900).attr("height", 600).attr("id", "plotGraph");
     let padding = { "top": 30, "bottom": 30, "right": 30, "left":30};
     movieData.forEach(function(data, index){
@@ -36,7 +24,7 @@
       return data['imdb_rating_num'];
     });
     let yearScale = d3.scaleLinear().domain([1980, yearMax]).range([0,840]);
-    let ratingScale = d3.scaleLinear().domain([4,10]).range([540, 0])
+    let ratingScale = d3.scaleLinear().domain([5,8]).range([540, 0])
     let xAxis = d3.axisBottom(yearScale).tickFormat(d3.format(".0f"));
     let yAxis = d3.axisLeft(ratingScale).tickFormat(d3.format(",.1s")).ticks(5);
 
@@ -148,6 +136,3 @@
 
 
   }).catch( error => { console.log("Your Error is this:" + error.message);});
-
-  </script>
-</p>
