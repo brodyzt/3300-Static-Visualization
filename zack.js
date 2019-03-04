@@ -39,14 +39,24 @@ d3.json("testfailures.json").then(movieData => {
             right: 100,
             betweenLegend: -250
         }
+        
+        
+        let stackBarContainerSvgWidth = 1200;
+        let stackBarContainerSvgHeight = 800;
 
-        let stackBarContainerSvg = d3.select("svg#stackBarGraph");
+        let stackBarContainerSvg = d3.select("svg#stackBarGraph")
+            // .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 " + stackBarContainerSvgWidth + " " + stackBarContainerSvgHeight)
+            .classed("svg-content", true);
 
-        let stackBarWidth = stackBarContainerSvg.attr("width") - stackBarPadding.left - stackBarPadding.right;
-        let stackBarHeight = stackBarContainerSvg.attr("height") - stackBarPadding.top - stackBarPadding.bottom;
+        let stackBarWidth = stackBarContainerSvgWidth - stackBarPadding.left - stackBarPadding.right;
+        let stackBarHeight = stackBarContainerSvgHeight - stackBarPadding.top - stackBarPadding.bottom;
+
+        console.log(stackBarWidth)
+        console.log(stackBarHeight)
 
         let stackBarSvg = stackBarContainerSvg.append("g")
-            .attr("transform", "translate(" + (stackBarContainerSvg.attr("width") / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");
+            .attr("transform", "translate(" + (stackBarContainerSvgWidth / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");
 
         let startYear = 1990;
         let endYear = 2013;
@@ -160,7 +170,7 @@ d3.json("testfailures.json").then(movieData => {
                         .attr("y", barTopY - stackBarHeight + currentY)
                         .style("fill", stackBarColorScale[Math.floor(index / 2.0)])
                         .style("opacity", 0.75 - (index % 2) * 0.25)
-                        
+
                     currentY -= height;
                 })
 

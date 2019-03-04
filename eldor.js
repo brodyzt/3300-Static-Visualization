@@ -1,6 +1,9 @@
-let svg = d3.select("svg#eldor");
-let svg_height = svg.attr("height");
-let svg_width = svg.attr("width");
+let svg_height = 800;
+let svg_width = 1200;
+
+let svg = d3.select("svg#eldor")
+    .attr("viewBox", "0 0 " + svg_width + " " + svg_height)
+    .classed("svg-content", true);
 let margin = {
     top: 100,
     right: 100,
