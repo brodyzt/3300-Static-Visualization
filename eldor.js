@@ -64,7 +64,7 @@ d3.json("eldor.json").then(function (movieData) {
     let dict = {}
     // add the circles
     movieData.forEach((d, i) => {
-        let x = xScale(d['year'] + Math.random() * 20 - 10);
+        let x = xScale(d['year']) + Math.random() * 20 - 10;
         let y = yScale(d['budget13']);
         let r = 5;
         let bin = (d['binary'] == "PASS") ? "blue" : "red";
