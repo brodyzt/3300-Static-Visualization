@@ -41,7 +41,7 @@ d3.json("eldor.json").then(function (movieData) {
 
     const xScale = yearScale.range([0, chartWidth]); // x axis
     const yScale = budgetScale.range([chartHeight, 0]); // y axis
-    const rScale = ratingScale.range([ratingMin * 2, ratingMax * 2]); // radius
+    const rScale = ratingScale.range([ratingMin, ratingMax]); // radius
 
     // X axis 
     let bottomAxis = d3.axisBottom(xScale).tickFormat(d3.format(""));
@@ -66,7 +66,7 @@ d3.json("eldor.json").then(function (movieData) {
     movieData.forEach((d, i) => {
         let x = xScale(d['year']) + Math.random() * 20 - 10;
         let y = yScale(d['budget13']);
-        let r = 5;
+        let r = rScale(d['imdbRating']);
         let bin = (d['binary'] == "PASS") ? "blue" : "red";
 
         // collect the yearly pass/fail count
@@ -86,8 +86,8 @@ d3.json("eldor.json").then(function (movieData) {
         let circle = scatter.append("circle")
             .attr("cx", x)
             .attr("cy", y)
-            .attr("r", r)
-            .attr("opacity", 0.7)
+            .attr("r", 8)
+            .attr("opacity", 0.6)
             .style("fill", bin)
             .attr("title", d['title'])
             .attr("year", d['year'])
@@ -160,8 +160,8 @@ d3.json("eldor.json").then(function (movieData) {
     //     .attr("d", fillPath);
     // //     console.log(fillData);
 
-    svg.append("text").
-    attr("transform", "translate(" + (margin.left + chartWidth / 2.0) + "," + (margin.top + chartHeight + margin.bottom / 2.0) + ")")
+    svg.append("text")
+        .attr("transform", "translate(" + (margin.left + chartWidth / 2.0) + "," + (margin.top + chartHeight + margin.bottom / 2.0) + ")")
         .style("text-anchor", "middle")
         .attr("class", "axesLabel")
         .text("Year")
@@ -170,5 +170,24 @@ d3.json("eldor.json").then(function (movieData) {
         .style("text-anchor", "middle")
         .attr("class", "axesLabel")
         .text("Budget ($)")
+    
+    svg.append("circle")
+        .style("fill", "red")
+        .attr("cx", xScale(1973))
+        .attr("cy", 50)
+        .attr("r", 10);
+    svg.append("text")
+        .attr("transform", "translate(" + xScale(1974) + "," + 55 + ")")
+        .style("font-size", "15")
+        .text("Failed Bechdel Test");
 
+    svg.append("circle")
+        .style("fill", "blue")
+        .attr("cx", xScale(1985))
+        .attr("cy", 50)
+        .attr("r", 10);
+    svg.append("text")
+        .attr("transform", "translate(" + xScale(1986) + "," + 55 + ")")
+        .style("font-size", "15")
+        .text("Passed Bechdel Test");
 });
