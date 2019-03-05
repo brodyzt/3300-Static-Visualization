@@ -17,20 +17,18 @@ d3.json("eldor.json").then(function (movieData) {
     // Cast the data into appropriate types
     movieData.forEach((d, i) => {
         d['year'] = Number(d["year"]);
-        d['budget'] = Number(d["budget"]);
+        d['budget13'] = Number(d["budget13"]);
         d['domGross'] = Number(d["domGross"]);
         d['intGross'] = Number(d["intGross"]);
         d['imdbRating'] = Number(d["imdbRating"]);
-        d['intGain'] = Number(d["intGross"]) / Number(d["budget"]);
-        d['domGain'] = Number(d["domGross"]) / Number(d["budget"]);
     });
-
+    
     // filter the movieData
-    movieData = movieData.filter(d => !isNaN(d['budget']) && !isNaN(d['domGross']) && !isNaN(d['intGross']));
+    movieData = movieData.filter(d => !isNaN(d['budget13']) && !isNaN(d['domGross']) && !isNaN(d['intGross']));
 
     // Prepare the scales
-    const budgetMin = d3.min(movieData, d => d['budget']);
-    const budgetMax = d3.max(movieData, d => d['budget']);
+    const budgetMin = d3.min(movieData, d => d['budget13']);
+    const budgetMax = d3.max(movieData, d => d['budget13']);
     const budgetScale = d3.scaleLog().domain([budgetMin, budgetMax]);
 
     const ratingMin = d3.min(movieData, d => d['imdbRating']);
@@ -67,7 +65,7 @@ d3.json("eldor.json").then(function (movieData) {
     // add the circles
     movieData.forEach((d, i) => {
         let x = xScale(d['year']);
-        let y = yScale(d['budget']);
+        let y = yScale(d['budget13']);
         let r = rScale(d['imdbRating']);
         let bin = (d['binary'] == "PASS") ? "blue" : "red";
 
@@ -171,6 +169,6 @@ d3.json("eldor.json").then(function (movieData) {
         .attr("transform", "translate(" + (margin.left / 2.0 - 20) + "," + (chartHeight / 2.0 + margin.top) + ")rotate(270)")
         .style("text-anchor", "middle")
         .attr("class", "axesLabel")
-        .text("International Gross ($)")
+        .text("Budget ($)")
 
 });
