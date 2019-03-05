@@ -29,14 +29,14 @@ d3.json("eldor.json").then(function (movieData) {
     // Prepare the scales
     const budgetMin = d3.min(movieData, d => d['budget13']);
     const budgetMax = d3.max(movieData, d => d['budget13']);
-    const budgetScale = d3.scaleLog().domain([budgetMin, budgetMax]);
+    const budgetScale = d3.scaleLog().domain([budgetMin-1000, budgetMax]);
 
     const ratingMin = d3.min(movieData, d => d['imdbRating']);
     const ratingMax = d3.max(movieData, d => d['imdbRating']);
     const ratingScale = d3.scaleLinear().domain([ratingMin, ratingMax]);
 
-    const yearMin = d3.min(movieData, d => d['year']);
-    const yearMax = d3.max(movieData, d => d['year']);
+    const yearMin = 1965;
+    const yearMax = 2015;
     const yearScale = d3.scaleLinear().domain([yearMin, yearMax]);
 
     const xScale = yearScale.range([0, chartWidth]); // x axis
@@ -44,7 +44,7 @@ d3.json("eldor.json").then(function (movieData) {
     const rScale = ratingScale.range([ratingMin * 2, ratingMax * 2]); // radius
 
     // X axis 
-    let bottomAxis = d3.axisBottom(xScale);
+    let bottomAxis = d3.axisBottom(xScale).tickFormat(d3.format(""));
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(" + margin.left + "," + (margin.top + chartHeight) + ")")
@@ -66,7 +66,7 @@ d3.json("eldor.json").then(function (movieData) {
     movieData.forEach((d, i) => {
         let x = xScale(d['year']);
         let y = yScale(d['budget13']);
-        let r = rScale(d['imdbRating']);
+        let r = 5;
         let bin = (d['binary'] == "PASS") ? "blue" : "red";
 
         // collect the yearly pass/fail count
@@ -87,7 +87,7 @@ d3.json("eldor.json").then(function (movieData) {
             .attr("cx", x)
             .attr("cy", y)
             .attr("r", r)
-            .attr("opacity", 0.2)
+            .attr("opacity", 0.7)
             .style("fill", bin)
             .attr("title", d['title'])
             .attr("year", d['year'])
@@ -97,68 +97,68 @@ d3.json("eldor.json").then(function (movieData) {
             .attr("intGain", d['intGain']);
     });
 
-    let lScale = d3.scaleLinear().domain([0, 100]).range([chartHeight, chartHeight - 160]);
-    let rightAxis = d3.axisRight(lScale);
-    svg.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(" + (chartWidth + margin.left) + "," + margin.top + ")")
-        .call(rightAxis);
-    let passPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["pass"] / (d["pass"] + d["fail"]))));
-    d3.select("g#scatter")
-        .append("path")
-        .attr("stroke", 'blue')
-        .attr("stroke-width", 2)
-        .attr("opacity", 0.5)
-        .attr("fill-opacity", 0)
-        .datum(Object.values(dict))
-        .attr("d", passPath);
+    // let lScale = d3.scaleLinear().domain([0, 100]).range([chartHeight, chartHeight - 160]);
+    // let rightAxis = d3.axisRight(lScale);
+    // svg.append("g")
+    //     .attr("class", "y axis")
+    //     .attr("transform", "translate(" + (chartWidth + margin.left) + "," + margin.top + ")")
+    //     .call(rightAxis);
+    // let passPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["pass"] / (d["pass"] + d["fail"]))));
+    // d3.select("g#scatter")
+    //     .append("path")
+    //     .attr("stroke", 'blue')
+    //     .attr("stroke-width", 2)
+    //     .attr("opacity", 0.5)
+    //     .attr("fill-opacity", 0)
+    //     .datum(Object.values(dict))
+    //     .attr("d", passPath);
 
-    let pfillData = Object.values(dict).concat([{
-        'pass': 0,
-        'fail': 1,
-        "year": 2013
-    }, {
-        'pass': 0,
-        'fail': 1,
-        "year": 1970
-    }]);
-    let pfillPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["pass"] / (d["pass"] + d["fail"]))));
-    d3.select("g#scatter")
-        .append("path")
-        .attr("stroke", 'blue')
-        .attr("stroke-width", 0)
-        .attr("fill", "blue")
-        .attr("opacity", 0.5)
-        .attr("fill-opacity", 0.1)
-        .datum(pfillData)
-        .attr("d", pfillPath);
+    // let pfillData = Object.values(dict).concat([{
+    //     'pass': 0,
+    //     'fail': 1,
+    //     "year": 2013
+    // }, {
+    //     'pass': 0,
+    //     'fail': 1,
+    //     "year": 1970
+    // }]);
+    // let pfillPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["pass"] / (d["pass"] + d["fail"]))));
+    // d3.select("g#scatter")
+    //     .append("path")
+    //     .attr("stroke", 'blue')
+    //     .attr("stroke-width", 0)
+    //     .attr("fill", "blue")
+    //     .attr("opacity", 0.5)
+    //     .attr("fill-opacity", 0.1)
+    //     .datum(pfillData)
+    //     .attr("d", pfillPath);
 
-    let failPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["fail"] / (d["pass"] + d["fail"]))));
-    d3.select("g#scatter")
-        .append("path")
-        .attr("stroke", 'red')
-        .attr("stroke-width", 2)
-        .attr("opacity", 0.5)
-        .attr("fill-opacity", 0)
-        .datum(Object.values(dict))
-        .attr("d", failPath);
+    // let failPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["fail"] / (d["pass"] + d["fail"]))));
+    // d3.select("g#scatter")
+    //     .append("path")
+    //     .attr("stroke", 'red')
+    //     .attr("stroke-width", 2)
+    //     .attr("opacity", 0.5)
+    //     .attr("fill-opacity", 0)
+    //     .datum(Object.values(dict))
+    //     .attr("d", failPath);
 
-    let fillData = Object.values(dict).concat([{
-        'pass': 1,
-        'fail': 0,
-        "year": 2013
-    }]);
-    let fillPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["fail"] / (d["pass"] + d["fail"]))));
-    d3.select("g#scatter")
-        .append("path")
-        .attr("stroke", 'red')
-        .attr("stroke-width", 0)
-        .attr("fill", "red")
-        .attr("opacity", 0.5)
-        .attr("fill-opacity", 0.1)
-        .datum(fillData)
-        .attr("d", fillPath);
-    //     console.log(fillData);
+    // let fillData = Object.values(dict).concat([{
+    //     'pass': 1,
+    //     'fail': 0,
+    //     "year": 2013
+    // }]);
+    // let fillPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["fail"] / (d["pass"] + d["fail"]))));
+    // d3.select("g#scatter")
+    //     .append("path")
+    //     .attr("stroke", 'red')
+    //     .attr("stroke-width", 0)
+    //     .attr("fill", "red")
+    //     .attr("opacity", 0.5)
+    //     .attr("fill-opacity", 0.1)
+    //     .datum(fillData)
+    //     .attr("d", fillPath);
+    // //     console.log(fillData);
 
     svg.append("text").
     attr("transform", "translate(" + (margin.left + chartWidth / 2.0) + "," + (margin.top + chartHeight + margin.bottom / 2.0) + ")")
