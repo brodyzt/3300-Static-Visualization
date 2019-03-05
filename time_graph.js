@@ -150,13 +150,13 @@ d3.csv("original_with_ratings.csv").then(function (data) {
 
         let path = d3.line().x(d => yearScale(d.year)).y(d => ratingScale(d.val) + 30);
         let currentGraph = svg;
-        currentGraph.append("path").attr("stroke", 'red').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalFailedArray).attr("d", path);
-        currentGraph.append("path").attr("stroke", 'blue').attr("stroke-width", 2).attr("fill-opacity", 0).datum(finalPassedArray).attr("d", path);
+        currentGraph.append("path").attr("stroke", 'red').attr("stroke-width", 4).attr("fill-opacity", 0).datum(finalFailedArray).attr("d", path);
+        currentGraph.append("path").attr("stroke", 'blue').attr("stroke-width", 4).attr("fill-opacity", 0).datum(finalPassedArray).attr("d", path);
         timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth / 2.0) + "," + (padding.top + timeGraphHeight + padding.bottom / 2.0) + ")").style("text-anchor", "middle").attr("class", "x axesLabel").text("Year")
         timeGraphContainerSvg.append("text").attr("transform", "translate(" + (padding.left + timeGraphWidth + padding.right / 2.0) + "," + (timeGraphHeight / 2.0 + padding.top) + ")rotate(90)").style("text-anchor", "middle").attr("class", "y axesLabel").text("IMDB Rating")
-        svg.append("line").style("stroke", "red").attr("x1", 750 - legendXInset).attr("y1", 60).attr("x2", 760 - legendXInset).attr("y2", 60);
+        svg.append("line").style("stroke", "red").attr("x1", 750 - legendXInset).attr("y1", 60).attr("x2", 760 - legendXInset).attr("y2", 60).attr("stroke-width", 4);
         svg.append("text").attr("transform", "translate(" + (770 - legendXInset) + "," + 63 + ")").style("font-size", "15").text("Failed Bechdel Test");
-        svg.append("line").style("stroke", "blue").attr("x1", 750 - legendXInset).attr("y1", 79).attr("x2", 760 - legendXInset).attr("y2", 79);
+        svg.append("line").style("stroke", "blue").attr("x1", 750 - legendXInset).attr("y1", 79).attr("x2", 760 - legendXInset).attr("y2", 79).attr("stroke-width", 4);
         svg.append("text").attr("transform", "translate(" + (770 - legendXInset) + "," + 83 + ")").style("font-size", "15").text("Passed Bechdel Test");
 
         // Add left edge for y axis
