@@ -57,8 +57,8 @@
 }
 
 .container {
-    margin-top: 150px;
-    margin-bottom: 150px;
+    margin-top: 100px;
+    margin-bottom: 200px;
     display: flex;
     justify-content: space-around;
     border-radius: 50px;
@@ -95,7 +95,7 @@ td {
 .titleContainer {
     margin-top: 50px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
@@ -103,7 +103,7 @@ td {
 
 .verticalContainer {
     margin-top: 200px;
-    margin-bottom: 225px;
+    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
