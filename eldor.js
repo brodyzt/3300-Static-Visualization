@@ -13,7 +13,7 @@ let margin = {
 let chartWidth = svg_width - margin.left - margin.right;
 let chartHeight = svg_height - margin.top - margin.bottom;
 
-d3.json("data/eldor.json").then(function (movieData) {
+d3.json("Data/eldor.json").then(function (movieData) {
         // Cast the data into appropriate types
         movieData.forEach((d, i) => {
             d['year'] = Number(d["year"]);

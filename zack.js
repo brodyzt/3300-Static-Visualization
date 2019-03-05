@@ -1,4 +1,4 @@
-d3.json("data/testfailures.json").then(movieData => {
+d3.json("Data/testfailures.json").then(movieData => {
 
         /* List of Keywords for Each Bechdel Failure Category */
         let stackBarTestNames = [
