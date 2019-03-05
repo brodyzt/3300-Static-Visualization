@@ -122,6 +122,10 @@ svg {
     margin-bottom: 50px;
 }
 
+.aside p {
+    margin-bottom: 25px;
+}
+
 .tick text {
     font-size: 15;
     font-style: normal;
