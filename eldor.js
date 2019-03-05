@@ -87,7 +87,7 @@ d3.json("eldor.json").then(function (movieData) {
             .attr("cx", x)
             .attr("cy", y)
             .attr("r", 8)
-            .attr("opacity", 0.6)
+            .attr("opacity", 0.4)
             .style("fill", bin)
             .attr("title", d['title'])
             .attr("year", d['year'])
