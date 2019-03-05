@@ -20,13 +20,10 @@ d3.csv("original_with_ratings.csv").then(function (data) {
         let timeGraphWidth = svg_width - padding.left - padding.right;
         let timeGraphHeight = svg_height - padding.top - padding.bottom;
 
-        // console.log(timeGraphHeight)
-
 
         let svg = timeGraphContainerSvg.append("g")
             .attr("transform", "translate(" + (svg_width / 2.0 - timeGraphWidth / 2.0) + "," + padding.top + ")")
 
-        // console.log("here")
 
         movieData.forEach(function (data, index) {
             data['year_num'] = Number(data['year'])
@@ -65,16 +62,6 @@ d3.csv("original_with_ratings.csv").then(function (data) {
 
         let yGrid = d3.axisLeft(ratingScale).tickSize(-timeGraphWidth).tickFormat("");
         let xGrid = d3.axisBottom(yearScale).tickSize(-timeGraphHeight).tickFormat("");
-
-        // svg.append("g")
-        //     .attr("class", "gridlines")
-        //     .attr("transform", "translate(" + 0 + "," + 0 + ")")
-        //     .call(yGrid);
-        // svg.append("g")
-        //     .attr("class", "gridlines")
-        //     .attr("transform", "translate(" + 0 + "," + (timeGraphHeight) + ")")
-        //     .call(xGrid);
-
 
         let passed_rating_dict = {};
         let failed_rating_dict = {};

@@ -45,7 +45,6 @@ d3.json("testfailures.json").then(movieData => {
         let stackBarContainerSvgHeight = 800;
 
         let stackBarContainerSvg = d3.select("svg#stackBarGraph")
-            // .attr("preserveAspectRatio", "xMinYMin meet")
             .attr("viewBox", "0 0 " + stackBarContainerSvgWidth + " " + stackBarContainerSvgHeight)
             .classed("svg-content", true);
 

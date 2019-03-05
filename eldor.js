@@ -97,69 +97,6 @@ d3.json("eldor.json").then(function (movieData) {
             .attr("intGain", d['intGain']);
     });
 
-    // let lScale = d3.scaleLinear().domain([0, 100]).range([chartHeight, chartHeight - 160]);
-    // let rightAxis = d3.axisRight(lScale);
-    // svg.append("g")
-    //     .attr("class", "y axis")
-    //     .attr("transform", "translate(" + (chartWidth + margin.left) + "," + margin.top + ")")
-    //     .call(rightAxis);
-    // let passPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["pass"] / (d["pass"] + d["fail"]))));
-    // d3.select("g#scatter")
-    //     .append("path")
-    //     .attr("stroke", 'blue')
-    //     .attr("stroke-width", 2)
-    //     .attr("opacity", 0.5)
-    //     .attr("fill-opacity", 0)
-    //     .datum(Object.values(dict))
-    //     .attr("d", passPath);
-
-    // let pfillData = Object.values(dict).concat([{
-    //     'pass': 0,
-    //     'fail': 1,
-    //     "year": 2013
-    // }, {
-    //     'pass': 0,
-    //     'fail': 1,
-    //     "year": 1970
-    // }]);
-    // let pfillPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["pass"] / (d["pass"] + d["fail"]))));
-    // d3.select("g#scatter")
-    //     .append("path")
-    //     .attr("stroke", 'blue')
-    //     .attr("stroke-width", 0)
-    //     .attr("fill", "blue")
-    //     .attr("opacity", 0.5)
-    //     .attr("fill-opacity", 0.1)
-    //     .datum(pfillData)
-    //     .attr("d", pfillPath);
-
-    // let failPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["fail"] / (d["pass"] + d["fail"]))));
-    // d3.select("g#scatter")
-    //     .append("path")
-    //     .attr("stroke", 'red')
-    //     .attr("stroke-width", 2)
-    //     .attr("opacity", 0.5)
-    //     .attr("fill-opacity", 0)
-    //     .datum(Object.values(dict))
-    //     .attr("d", failPath);
-
-    // let fillData = Object.values(dict).concat([{
-    //     'pass': 1,
-    //     'fail': 0,
-    //     "year": 2013
-    // }]);
-    // let fillPath = d3.line().x(d => xScale(d.year)).y(d => lScale(100 * (d["fail"] / (d["pass"] + d["fail"]))));
-    // d3.select("g#scatter")
-    //     .append("path")
-    //     .attr("stroke", 'red')
-    //     .attr("stroke-width", 0)
-    //     .attr("fill", "red")
-    //     .attr("opacity", 0.5)
-    //     .attr("fill-opacity", 0.1)
-    //     .datum(fillData)
-    //     .attr("d", fillPath);
-    // //     console.log(fillData);
-
     svg.append("text")
         .attr("transform", "translate(" + (margin.left + chartWidth / 2.0) + "," + (margin.top + chartHeight + margin.bottom / 2.0) + ")")
         .style("text-anchor", "middle")
@@ -175,7 +112,8 @@ d3.json("eldor.json").then(function (movieData) {
         .style("fill", "red")
         .attr("cx", xScale(1973))
         .attr("cy", 50)
-        .attr("r", 10);
+        .attr("r", 10)
+        .attr("opacity", 0.4);
     svg.append("text")
         .attr("transform", "translate(" + xScale(1974) + "," + 55 + ")")
         .style("font-size", "15")
@@ -185,7 +123,8 @@ d3.json("eldor.json").then(function (movieData) {
         .style("fill", "blue")
         .attr("cx", xScale(1985))
         .attr("cy", 50)
-        .attr("r", 10);
+        .attr("r", 10)
+        .attr("opacity", 0.4);
     svg.append("text")
         .attr("transform", "translate(" + xScale(1986) + "," + 55 + ")")
         .style("font-size", "15")
