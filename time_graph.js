@@ -1,5 +1,5 @@
 let movieData = []
-d3.csv("original_with_ratings.csv").then(function (data) {
+d3.csv("data/original_with_ratings.csv").then(function (data) {
         movieData = data
 
         let svg_height = 800;

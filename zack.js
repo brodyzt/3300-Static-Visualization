@@ -1,4 +1,4 @@
-d3.json("testfailures.json").then(movieData => {
+d3.json("data/testfailures.json").then(movieData => {
 
         /* List of Keywords for Each Bechdel Failure Category */
         let stackBarTestNames = [
@@ -9,7 +9,7 @@ d3.json("testfailures.json").then(movieData => {
             'nowomen', // no women in the movie
             'nowomen-disagree',
 
-            /* Passing categories that aren't being included in this graph */
+            /* Passing categories which aren't being included in this graph */
             // 'ok',                        // passes bechdel test
             // 'ok-disagree',               // passes bechdel test (not unanimous opinion)
             // 'dubious',                   // doubtful that it passes the test
@@ -50,9 +50,6 @@ d3.json("testfailures.json").then(movieData => {
 
         let stackBarWidth = stackBarContainerSvgWidth - stackBarPadding.left - stackBarPadding.right;
         let stackBarHeight = stackBarContainerSvgHeight - stackBarPadding.top - stackBarPadding.bottom;
-
-        console.log(stackBarWidth)
-        console.log(stackBarHeight)
 
         let stackBarSvg = stackBarContainerSvg.append("g")
             .attr("transform", "translate(" + (stackBarContainerSvgWidth / 2.0 - stackBarWidth / 2.0) + "," + stackBarPadding.top + ")");

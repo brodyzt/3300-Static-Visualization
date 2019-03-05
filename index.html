@@ -1,11 +1,18 @@
 <html>
 
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.1/d3.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <!-- D3 Library -->
+    <script src="js_libraries/d3.min.js"></script>
+
+    <!-- Our custom stylesheet -->
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <!-- Resources for Material Design Components -->
+    <link rel="stylesheet" href="stylesheets/material-components-web.min.css">
+    <script src="js_libraries/material-components-web.min.js"></script>
+
+    <!-- Stylesheet for Roboto Font -->
+    <link href="stylesheets/roboto.css" rel="stylesheet">
 </head>
 
 <body class="mdc-typography">
@@ -62,7 +69,8 @@
             <p>
                 This graph illustrates the progression of movies that pass and fail the Bechdel Test over the last
                 thirty-five years in relation to their average IMDB rating. For each year, movies were split into two
-                groups based on whether they passed or failed the Bechdel test. Then, the average IMDB rating was calculated
+                groups based on whether they passed or failed the Bechdel test. Then, the average IMDB rating was
+                calculated
                 for both of these groups.
             </p>
             <p>
@@ -89,15 +97,17 @@
             <h2 class="mdc-typography--headline2 graphHeader">Gross vs. Year</h2>
             <p>
                 Budgets are a very good indication of how much trust and investment that a movie has. In this
-                visualization, movies from more than 30 years are graphed in relation to their budget and 
+                visualization, movies from more than 30 years are graphed in relation to their budget and
                 marked as passing the Bechdel Test (blue) or failing (red).
             </p>
             <p>
                 The graph seeks to illustrate the differences in backing these two groups of movies got, and observe
                 how this trend has evolved and changed through the last few decades of American Media. Although,
-                the number of movies passing and failing the test seem relatively equal, the better funded movies have been
-                failing the Bechdel test. This is evident in the abundance of more of red color circles at higher scale budgets 
-                relative to blue ones. 
+                the number of movies passing and failing the test seem relatively equal, the better funded movies have
+                been
+                failing the Bechdel test. This is evident in the abundance of more of red color circles at higher scale
+                budgets
+                relative to blue ones.
             </p>
         </aside>
         <script src="eldor.js"></script>
