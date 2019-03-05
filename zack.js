@@ -208,7 +208,7 @@ d3.json("testfailures.json").then(movieData => {
                 .style("fill", stackBarColorScale[Math.floor((stackBarTestNames.length - 1 - index) / 2.0)])
                 .style("opacity", 0.75 - (index % 2) * 0.25)
 
-            /* Add decription text for category */
+            /* Add description text for category */
             stackBarCurrentLegendItem.append("text")
                 .text(stackBarTestKeyToFullNameDict[testName])
                 .attr("dx", "25")
